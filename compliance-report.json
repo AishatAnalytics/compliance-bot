@@ -1,0 +1,74 @@
+{
+  "timestamp": "2026-04-27T21:34:31.357Z",
+  "score": {
+    "totalRules": 10,
+    "compliantRules": 0,
+    "nonCompliantRules": 10,
+    "criticalFailures": 6,
+    "complianceScore": 0,
+    "riskLevel": "HIGH"
+  },
+  "rules": [
+    {
+      "ruleName": "root-account-mfa-enabled",
+      "compliance": "INSUFFICIENT_DATA",
+      "isCompliant": false,
+      "isCritical": true
+    },
+    {
+      "ruleName": "iam-password-policy",
+      "compliance": "INSUFFICIENT_DATA",
+      "isCompliant": false,
+      "isCritical": true
+    },
+    {
+      "ruleName": "cloudtrail-enabled",
+      "compliance": "INSUFFICIENT_DATA",
+      "isCompliant": false,
+      "isCritical": true
+    },
+    {
+      "ruleName": "s3-bucket-public-read-prohibited",
+      "compliance": "INSUFFICIENT_DATA",
+      "isCompliant": false,
+      "isCritical": true
+    },
+    {
+      "ruleName": "encrypted-volumes",
+      "compliance": "INSUFFICIENT_DATA",
+      "isCompliant": false,
+      "isCritical": true
+    },
+    {
+      "ruleName": "vpc-default-security-group-closed",
+      "compliance": "INSUFFICIENT_DATA",
+      "isCompliant": false,
+      "isCritical": false
+    },
+    {
+      "ruleName": "access-keys-rotated",
+      "compliance": "INSUFFICIENT_DATA",
+      "isCompliant": false,
+      "isCritical": false
+    },
+    {
+      "ruleName": "mfa-enabled-for-iam-console-access",
+      "compliance": "INSUFFICIENT_DATA",
+      "isCompliant": false,
+      "isCritical": true
+    },
+    {
+      "ruleName": "restricted-ssh",
+      "compliance": "INSUFFICIENT_DATA",
+      "isCompliant": false,
+      "isCritical": false
+    },
+    {
+      "ruleName": "rds-storage-encrypted",
+      "compliance": "INSUFFICIENT_DATA",
+      "isCompliant": false,
+      "isCritical": false
+    }
+  ],
+  "claudeAnalysis": "# AWS Compliance Assessment Report\n\n## Executive Summary\n\nYour AWS environment shows **0% compliance** with a **HIGH risk level**. All 10 evaluated rules returned \"INSUFFICIENT_DATA,\" indicating either AWS Config rules are not properly deployed, the Config recorder is disabled, or IAM permissions are insufficient for compliance evaluation. **This represents a critical visibility gap** — you cannot protect what you cannot see.\n\n---\n\n## Top 3 Critical Issues - Immediate Action Required\n\n### 1. Enable AWS Config & Config Rules\n```bash\naws configservice put-configuration-recorder --configuration-recorder name=default,roleARN=arn:aws:iam::ACCOUNT_ID:role/config-role\naws configservice start-configuration-recorder --configuration-recorder-name default\n```\n**Impact:** Without Config, no compliance monitoring exists.\n\n### 2. Enable Root Account MFA\n- Console → IAM → Security credentials (root) → Assign MFA device\n- Use hardware MFA (YubiKey) or virtual MFA (Authy/Google Authenticator)\n\n**Impact:** Root compromise = total account takeover.\n\n### 3. Enable CloudTrail\n```bash\naws cloudtrail create-trail --name security-trail --s3-bucket-name your-logging-bucket --is-multi-region-trail --enable-log-file-validation\naws cloudtrail start-logging --name security-trail\n```\n**Impact:** Zero audit trail for security investigations.\n\n---\n\n## Compliance Frameworks at Risk\n\n| Framework | Risk Level | Key Gaps |\n|-----------|------------|----------|\n| **SOC2** | CRITICAL | No audit logging, no access controls verification |\n| **HIPAA** | CRITICAL | Encryption status unknown, no access monitoring |\n| **PCI-DSS** | CRITICAL | MFA gaps, encryption unverified, no logging |\n\n**All three frameworks require encryption, MFA, and audit logging — none are verifiable.**\n\n---\n\n## Estimated Effort to 80% Compliance\n\n| Phase | Tasks | Timeline |\n|-------|-------|----------|\n| Foundation | Enable Config, CloudTrail, basic IAM | 2-4 hours |\n| Encryption | Enable E"
+}

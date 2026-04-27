@@ -1,0 +1,18 @@
+{
+  "name": "compliance-bot",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.91.1",
+    "@aws-sdk/client-config-service": "^3.1038.0",
+    "@aws-sdk/client-ses": "^3.1038.0",
+    "dotenv": "^17.4.2"
+  }
+}
